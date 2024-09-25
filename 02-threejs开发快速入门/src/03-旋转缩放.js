@@ -29,7 +29,7 @@ const parentCube = new THREE.Mesh(geometry, parentMaterial)
 parentCube.add(cube)
 parentCube.position.set(-3, 0, 0)
 // parentCube.scale.set(2,2,2)  // 父元素的放大也会影响子元素
-parentCube.rotation.x = Math.PI / 4 // 父元素的旋转也会影响子元素
+parentCube.rotation.x = Math.PI / 4  // 父元素的旋转也会影响子元素
 
 // 设置立方体的放大
 cube.position.set(3, 0, 0)
@@ -51,7 +51,7 @@ const axesHelper = new THREE.AxesHelper(5)
 scene.add(axesHelper)
 
 // 添加轨道控制器
-const controls = new OrbitControls(camera, renderer.domElement)
+const controls = new OrbitControls(camera, document.body)
 // 设置带阻尼的惯性
 controls.enableDamping = true
 // 设置阻尼系数
@@ -70,38 +70,3 @@ function animate() {
   renderer.render(scene, camera)
 }
 animate()
-
-// 监听窗口变化
-window.addEventListener("resize", () => {
-  // 重置渲染宽高比
-  renderer.setSize(window.innerWidth, window.innerHeight)
-  // 重置相机宽高比
-  camera.aspect = window.innerWidth / window.innerHeight
-  // 更新相机投影矩阵
-  camera.updateProjectionMatrix()
-})
-
-const btn = document.createElement("button")
-btn.innerHTML = "点击全屏"
-btn.style.position = "absolute"
-btn.style.top = "10px"
-btn.style.left = "10px"
-btn.style.zIndex = "999"
-btn.onclick = () => {
-  // 全屏
-  document.body.requestFullscreen()
-}
-document.body.appendChild(btn)
-
-// 退出全屏
-const exitFullScreenBtn = document.createElement("button")
-exitFullScreenBtn.innerHTML = '退出全屏'
-exitFullScreenBtn.style.position = "absolute"
-exitFullScreenBtn.style.top = "10px"
-exitFullScreenBtn.style.left = "100px"
-exitFullScreenBtn.style.zIndex = "999"
-exitFullScreenBtn.onclick = () => {
-  // 退出全屏
-  document.exitFullscreen()
-}
-document.body.appendChild(exitFullScreenBtn)
