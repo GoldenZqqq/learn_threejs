@@ -3,6 +3,8 @@ import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 // 导入lil.gui
 import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js"
+// 导入hdr加载器
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js"
 
 // 创建场景
 const scene = new THREE.Scene()
@@ -21,52 +23,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 // 创建几何体
-const cubegeometry = new THREE.BoxGeometry(1, 1, 1)
-// 创建材质
-const cubematerial0 = new THREE.MeshBasicMaterial({
-  color: 0x00ff00,
-  // wireframe: true
-})
-const cubematerial1 = new THREE.MeshBasicMaterial({
-  color: 0xff0000
-})
-const cubematerial2 = new THREE.MeshBasicMaterial({
-  color: 0x0000ff
-})
-const cubematerial3 = new THREE.MeshBasicMaterial({
-  color: 0xffff00
-})
-const cubematerial4 = new THREE.MeshBasicMaterial({
-  color: 0x00ffff
-})
-const cubematerial5 = new THREE.MeshBasicMaterial({
-  color: 0xff00ff
-})
-// 创建网格
-const cube = new THREE.Mesh(cubegeometry, [
-  cubematerial0,
-  cubematerial1,
-  cubematerial2,
-  cubematerial3,
-  cubematerial4,
-  cubematerial5
-])
-cube.position.x = 2
-
-// 将网格添加到场景中
-scene.add(cube)
-
-// 创建几何体
 const geometry = new THREE.BufferGeometry()
-// 创建顶点数据，顶点是有顺序的，每三个为一个顶点，逆时针为正面
-// const vertices = new Float32Array([
-//   -1.0, -1.0, 0.0, 1.0, -1.0, 0.0, 1.0, 1.0, 0.0,
-
-//   1.0, 1.0, 0.0, -1.0, 1.0, 0.0, -1.0, -1.0, 0.0
-// ])
-// // 创建顶点属性
-// geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3))
-
 // 使用索引绘制
 const vertices = new Float32Array([
   -1.0, -1.0, 0.0, 1.0, -1.0, 0.0, 1.0, 1.0, 0.0, -1.0, 1.0, 0
@@ -81,18 +38,6 @@ geometry.setIndex(new THREE.BufferAttribute(indices, 1))
 // 设置2个顶点组，形成2个材质
 geometry.addGroup(0, 3, 0)
 geometry.addGroup(3, 3, 1)
-
-// 创建材质
-const material = new THREE.MeshBasicMaterial({
-  color: 0x00ff00,
-  // side: THREE.DoubleSide
-  wireframe: true
-})
-const material1 = new THREE.MeshBasicMaterial({
-  color: 0xff0000
-})
-const plane = new THREE.Mesh(geometry, [material, material1])
-scene.add(plane)
 
 // 设置相机位置
 camera.position.z = 5
@@ -141,8 +86,48 @@ let eventObj = {
   }
 }
 
+// 创建纹理加载器
+let textureLoader = new THREE.TextureLoader()
+// 加载纹理
+let texture = textureLoader.load(
+  "./texture/watercover/CityNewYork002_COL_VAR1_1K.png"
+)
+// 加载ao贴图
+let aoMap = textureLoader.load("./texture/watercover/CityNewYork002_AO_1K.jpg")
+
+// 透明度贴图
+let alphaMap = textureLoader.load("./texture/door/height.jpg")
+
+// 光照贴图
+let lightMap = textureLoader.load("./texture/colors.png")
+
+// rgbeLoader 加载hdr贴图
+let rgbeLoader = new RGBELoader()
+rgbeLoader.load("./texture/Alex_Hart-Nature_Lab_Bones_2k.hdr", envMap => {
+  console.log("envMap", envMap)
+  // 设置球形映射
+  envMap.mapping = THREE.EquirectangularReflectionMapping
+  // 设置环境贴图
+  scene.environment = envMap
+})
+
+let planeGeometry = new THREE.PlaneGeometry(1, 1)
+let planeMaterial = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+  map: texture,
+  // 允许透明
+  transparent: true,
+  // 设置ao贴图
+  aoMap,
+  aoMapIntensity: 1,
+  // 透明度贴图
+  // alphaMap,
+  // 光照贴图
+  lightMap
+})
+let plane = new THREE.Mesh(planeGeometry, planeMaterial)
+scene.add(plane)
+
 // 创建 GUI
 const gui = new GUI()
-// 添加按钮
-gui.add(eventObj, "FullScreen").name("全屏")
-gui.add(eventObj, "ExitFullScreen").name("退出全屏")
+gui.add(planeMaterial, "aoMapIntensity").min(0).max(1).name("ao强度")
