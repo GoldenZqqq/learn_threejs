@@ -24,8 +24,7 @@ document.body.appendChild(renderer.domElement)
 const cubegeometry = new THREE.BoxGeometry(1, 1, 1)
 // 创建材质
 const cubematerial0 = new THREE.MeshBasicMaterial({
-  color: 0x00ff00,
-  // wireframe: true
+  color: 0x00ff00
 })
 const cubematerial1 = new THREE.MeshBasicMaterial({
   color: 0xff0000
