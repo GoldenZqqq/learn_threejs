@@ -59,6 +59,13 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix()
 })
 
+// 创建长方体
+const boxGeometry = new THREE.BoxGeometry(1, 1, 100)
+const boxMaterial = new THREE.MeshBasicMaterial({
+  color: 0x00ff00
+})
+const box = new THREE.Mesh(boxGeometry, boxMaterial)
+scene.add(box)
 
 // 创建场景线性雾
 scene.fog = new THREE.Fog(0x999999, 0.1, 50)
