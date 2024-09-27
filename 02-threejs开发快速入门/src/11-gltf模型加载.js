@@ -77,7 +77,6 @@ gltfLoader.load(
   "./model/Duck.glb",
   // 加载完成回调
   gltf => {
-    console.log("gltf", gltf)
     scene.add(gltf.scene)
   }
 )
@@ -93,7 +92,6 @@ gltfLoader.load(
   "./model/city.glb",
   // 加载完成回调
   gltf => {
-    console.log("gltf", gltf)
     scene.add(gltf.scene)
   }
 )
