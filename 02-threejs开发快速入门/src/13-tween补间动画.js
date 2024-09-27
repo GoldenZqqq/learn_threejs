@@ -52,6 +52,8 @@ function animate() {
   requestAnimationFrame(animate)
   // 渲染
   renderer.render(scene, camera)
+  // 更新Tween
+  TWEEN.update()
 }
 animate()
 
@@ -65,3 +67,52 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix()
 })
 
+const sphere1 = new THREE.Mesh(
+  new THREE.SphereGeometry(1, 32, 32),
+  new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+)
+sphere1.position.x = -4
+scene.add(sphere1)
+
+const tween = new TWEEN.Tween(sphere1.position)
+tween.to({ x: 4 }, 1000)
+tween.onUpdate(() => {
+  // console.log(sphere1.position.x)
+})
+// 设置循环无数次
+// tween.repeat(Infinity)
+// 循环往复
+// tween.yoyo(true)
+// tween.repeat(2)
+// tween.delay(3000)
+// 设置缓动函数
+tween.easing(TWEEN.Easing.Quadratic.InOut)
+
+let tween2 = new TWEEN.Tween(sphere1.position)
+tween2.to({ x: -4 }, 1000)
+tween.chain(tween2)
+tween2.chain(tween)
+
+// 启动补间动画
+tween.start()
+tween.onStart(() => {
+  console.log("开始")
+})
+tween.onComplete(() => {
+  console.log("结束")
+})
+tween.onStop(() => {
+  console.log("停止")
+})
+tween.onUpdate(() => {
+  console.log("更新")
+})
+
+// 创建GUI
+const gui = new GUI()
+let params = {
+  stop: function () {
+    tween.stop()
+  }
+}
+gui.add(params, "stop")
