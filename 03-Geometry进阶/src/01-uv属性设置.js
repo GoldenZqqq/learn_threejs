@@ -2,16 +2,6 @@
 import * as THREE from "three"
 // 导入轨道控制器
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
-// 导入lil.gui
-import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js"
-// 导入hdr加载器
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js"
-// 导入GLTF加载器
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
-// 导入draco解码器
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js"
-// 导入tween
-import * as TWEEN from "three/examples/jsm/libs/tween.module.js"
 
 // 创建场景
 const scene = new THREE.Scene()
