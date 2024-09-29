@@ -63,29 +63,29 @@ window.addEventListener("resize", () => {
 let textureLoader = new THREE.TextureLoader()
 // 加载纹理
 let texture = textureLoader.load(
-  "./texture/watercover/CityNewYork002_COL_VAR1_1K.png"
+  "/texture/watercover/CityNewYork002_COL_VAR1_1K.png"
 )
 texture.colorSpace = THREE.SRGBColorSpace
 // texture.colorSpace = THREE.LinearSRGBColorSpace
 // texture.colorSpace = THREE.NoColorSpace
 
 // 加载ao贴图
-let aoMap = textureLoader.load("./texture/watercover/CityNewYork002_AO_1K.jpg")
+let aoMap = textureLoader.load("/texture/watercover/CityNewYork002_AO_1K.jpg")
 
 // 透明度贴图
-let alphaMap = textureLoader.load("./texture/door/height.jpg")
+let alphaMap = textureLoader.load("/texture/door/height.jpg")
 
 // 光照贴图
-let lightMap = textureLoader.load("./texture/colors.png")
+let lightMap = textureLoader.load("/texture/colors.png")
 
 // 高光贴图
 let specularMap = textureLoader.load(
-  "./texture/watercover/CityNewYork002_GLOSS_1K.jpg"
+  "/texture/watercover/CityNewYork002_GLOSS_1K.jpg"
 )
 
 // rgbeLoader 加载hdr贴图
 let rgbeLoader = new RGBELoader()
-rgbeLoader.load("./texture/Alex_Hart-Nature_Lab_Bones_2k.hdr", envMap => {
+rgbeLoader.load("/texture/Alex_Hart-Nature_Lab_Bones_2k.hdr", envMap => {
   // 设置球形贴图
   envMap.mapping = THREE.EquirectangularReflectionMapping
   // 设置环境贴图

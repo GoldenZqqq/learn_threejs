@@ -74,7 +74,7 @@ const gltfLoader = new GLTFLoader()
 // 加载模型
 gltfLoader.load(
   // 模型路径
-  "./model/Duck.glb",
+  "/model/Duck.glb",
   // 加载完成回调
   gltf => {
     scene.add(gltf.scene)
@@ -84,12 +84,12 @@ gltfLoader.load(
 // 实例化加载器draco
 const dracoLoader = new DRACOLoader()
 // 设置draco路径
-dracoLoader.setDecoderPath("./draco/")
+dracoLoader.setDecoderPath("/draco/")
 // 设置gltf加载器draco解码器
 gltfLoader.setDRACOLoader(dracoLoader)
 gltfLoader.load(
   // 模型路径
-  "./model/city.glb",
+  "/model/city.glb",
   // 加载完成回调
   gltf => {
     scene.add(gltf.scene)
@@ -98,7 +98,7 @@ gltfLoader.load(
 
 // 加载环境贴图
 let rgbeLoader = new RGBELoader()
-rgbeLoader.load("./texture/Alex_Hart-Nature_Lab_Bones_2k.hdr", envMap => {
+rgbeLoader.load("/texture/Alex_Hart-Nature_Lab_Bones_2k.hdr", envMap => {
   // 球面环景图的映射
   envMap.mapping = THREE.EquirectangularReflectionMapping
   // 设置环境贴图
